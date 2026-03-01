@@ -784,23 +784,23 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="bg-black p-12 md:p-24 rounded-[4rem] text-white space-y-16"
+              className="bg-black p-10 md:p-16 rounded-[3rem] text-white space-y-12"
             >
               <div className="space-y-6">
                 <h3 className="text-xl font-black uppercase tracking-[0.4em] text-white/40">
                   {d.program.title}
                 </h3>
-                <p className="text-3xl md:text-5xl font-black text-white leading-tight">
+                <p className="text-2xl md:text-3xl font-black text-white leading-tight">
                   {d.program.desc}
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 {d.program.sections.map((section: any, i: number) => (
                   <div key={i} className="space-y-6">
                     <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] block border-b border-white/10 pb-4">{section.label}</span>
                     <div className="space-y-3">
                       {section.items.map((item: string, j: number) => (
-                        <p key={j} className="text-2xl font-black uppercase tracking-tight">{item}</p>
+                        <p key={j} className="text-xl font-black uppercase tracking-tight">{item}</p>
                       ))}
                     </div>
                     {section.note && (
@@ -819,13 +819,13 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="p-12 md:p-24 border-2 border-black rounded-[4rem] flex flex-col lg:flex-row items-center justify-between gap-16"
+              className="p-10 md:p-16 border-2 border-black rounded-[3rem] flex flex-col lg:flex-row items-center justify-between gap-12"
             >
               <div className="space-y-8 max-w-3xl">
                 <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black">
                   {d.consultation.title}
                 </h3>
-                <p className="text-2xl md:text-3xl font-black text-black/80 leading-relaxed">
+                <p className="text-xl md:text-2xl font-black text-black/80 leading-relaxed">
                   {d.consultation.desc}
                 </p>
               </div>
@@ -835,10 +835,10 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                   const contactSection = document.getElementById('contact');
                   if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="w-full lg:w-auto px-16 py-8 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-6 text-xl"
+                className="w-full lg:w-auto px-12 py-6 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-4 text-lg"
               >
                 Contact Form
-                <ArrowUpRight size={28} />
+                <ArrowUpRight size={20} />
               </button>
             </motion.div>
           )}
