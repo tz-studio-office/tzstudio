@@ -307,20 +307,39 @@ function Vision() {
 
 const services = [
   {
+    id: "education",
     title: "Education Design",
-    desc: "教育設計 / 英語指導 / 思考トレーニング。オンライン・対面レッスン、集団・マンツーマン対応。"
+    desc: "教育設計 / 英語指導 / 思考トレーニング。オンライン・対面レッスン、集団・マンツーマン対応。",
+    detail: {
+      title: "EDUCATION DESIGN",
+      subtitle: "言語と思考の構造を設計する",
+      description: "英語指導を単なる知識伝達ではなく、目標達成のための「構造設計」として捉えています。学習習慣の形成から成果達成まで、一人ひとりに最適な成長プロセスを設計します。",
+      experienceTitle: "教育領域における実践経験",
+      experienceDesc: "T'Z Studioの教育設計は、多様な教育現場での実践を基盤としています。",
+      experiences: [
+        "公文式教室 英語講師 / 教室運営",
+        "RIZAP ENGLISH 正社員トレーナー",
+        "武田塾 校舎長",
+        "都内私立高校 英検対策指導",
+        "中高一貫校 ESS活動顧問",
+        "社会人向けマンツーマン指導"
+      ],
+      closing: "幼少期教育から受験、社会人教育まで、幅広い層への指導経験を通じて培われた設計思想が核となっています。教育は、才能を伸ばすための“環境設計”であると考えています。"
+    }
   },
   {
+    id: "production",
     title: "Production",
     desc: "写真撮影・画像編集・Virtual Staging。AI活用によるコンテンツ制作。ブランド世界観を実装レベルで構築。"
   },
   {
+    id: "branding",
     title: "IP Branding",
     desc: "IP企画・設計、世界観構築、YouTube / デジタル展開設計、長期運営戦略。"
   }
 ];
 
-function Services() {
+function Services({ onServiceClick }: { onServiceClick: (service: any) => void }) {
   return (
     <section id="services" className="py-24 md:py-32 relative overflow-hidden bg-white scroll-mt-32">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -349,6 +368,7 @@ function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => onServiceClick(s)}
               className="group relative bg-white p-10 md:p-12 rounded-[3rem] border-2 border-black/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.02)] cursor-pointer overflow-hidden transition-all duration-700 hover:border-black hover:shadow-[0_40px_100px_rgba(0,0,0,0.06)]"
             >
               <div className="relative z-20 space-y-10 transition-colors duration-700 group-hover:text-white">
@@ -626,13 +646,113 @@ function CustomCursor() {
   );
 }
 
+function ServiceDetail({ service, onClose }: { service: any, onClose: () => void }) {
+  if (!service || !service.detail) return null;
+  const d = service.detail;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className="fixed inset-0 z-[10001] bg-white overflow-y-auto p-6 md:p-12"
+    >
+      <div className="max-w-7xl mx-auto relative">
+        <button 
+          onClick={onClose}
+          className="fixed top-8 right-8 md:top-12 md:right-12 z-[10002] w-16 h-16 rounded-full bg-black text-white flex items-center justify-center hover:scale-110 transition-transform"
+        >
+          <X size={32} />
+        </button>
+
+        <div className="pt-24 md:pt-32 space-y-24 pb-32">
+          <div className="space-y-8">
+            <motion.span 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-[12px] font-black text-black uppercase tracking-[0.6em] border-l-4 border-black pl-6 block"
+            >
+              SERVICE DETAIL
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="font-sans text-6xl md:text-9xl font-black tracking-[-0.08em] text-black uppercase leading-[0.85]"
+            >
+              {d.title}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-2xl md:text-4xl font-black text-black/40 uppercase tracking-tight"
+            >
+              {d.subtitle}
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="space-y-12"
+            >
+              <p className="text-2xl md:text-3xl font-black leading-relaxed text-black">
+                {d.description}
+              </p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="space-y-12 bg-black/[0.02] p-12 rounded-[4rem] border border-black/[0.05]"
+            >
+              <div className="space-y-8">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/60 border-b border-black/10 pb-4">
+                  {d.experienceTitle}
+                </h3>
+                <p className="text-lg font-black text-black/80">
+                  {d.experienceDesc}
+                </p>
+                <ul className="space-y-6">
+                  {d.experiences.map((exp: string, i: number) => (
+                    <li key={i} className="flex items-start gap-4 text-xl font-black text-black uppercase tracking-tight">
+                      <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
+                      {exp}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <p className="text-lg font-black text-black/60 leading-relaxed italic border-t border-black/5 pt-8">
+                {d.closing}
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function App() {
+  const [selectedService, setSelectedService] = useState<any>(null);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
+
+  useEffect(() => {
+    if (selectedService) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [selectedService]);
 
   return (
     <div className="relative bg-white selection:bg-black selection:text-white font-sans overflow-x-hidden">
@@ -653,12 +773,21 @@ export default function App() {
         <Hero />
         <Vision />
         <Marquee />
-        <Services />
+        <Services onServiceClick={setSelectedService} />
         <Projects />
         <About />
         <Contact />
         <Footer />
       </div>
+
+      <AnimatePresence>
+        {selectedService && (
+          <ServiceDetail 
+            service={selectedService} 
+            onClose={() => setSelectedService(null)} 
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
