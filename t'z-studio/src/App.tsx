@@ -312,10 +312,10 @@ const services = [
     desc: "教育設計 / 英語指導 / 思考トレーニング。オンライン・対面レッスン、集団・マンツーマン対応。",
     detail: {
       title: "EDUCATION DESIGN",
-      subtitle: "言語と思考の構造を設計する",
-      description: "英語指導を単なる知識伝達ではなく、目標達成のための「構造設計」として捉えています。学習習慣の形成から成果達成まで、一人ひとりに最適な成長プロセスを設計します。",
+      subtitle: "計画とやり方で、結果は変わる。",
+      description: "英語学習は、時間の長さではなく、計画と実行方法で決まります。T'Z Studioでは、目標から逆算した学習計画と、最適な実行方法を組み合わせ、持続可能な成長を支援します。",
       experienceTitle: "教育領域における実践経験",
-      experienceDesc: "T'Z Studioの教育設計は、多様な教育現場での実践を基盤としています。",
+      experienceDesc: "T'Z Studioの教育アプローチは、多様な教育現場での実践経験を基盤としています。",
       experiences: [
         "公文式教室 英語講師 / 教室運営",
         "RIZAP ENGLISH 正社員トレーナー",
@@ -324,7 +324,29 @@ const services = [
         "中高一貫校 ESS活動顧問",
         "社会人向けマンツーマン指導"
       ],
-      closing: "幼少期教育から受験、社会人教育まで、幅広い層への指導経験を通じて培われた設計思想が核となっています。教育は、才能を伸ばすための“環境設計”であると考えています。"
+      closing: "幼少期教育から大学受験、社会人教育まで、幅広い層への指導経験をもとに構築されています。",
+      results: {
+        title: "Results / Achievements",
+        items: [
+          { category: "University Entrance", content: ["GMARCH合格事例", "英語偏差値向上事例"] },
+          { category: "EIKEN", content: ["準1級・2級・準2級 多数合格"] },
+          { category: "TOEIC", content: ["200点以上スコア向上事例", "800点突破事例"] }
+        ],
+        closing: "成果は偶然ではなく、計画と方法に基づく継続的な改善の結果です。"
+      },
+      program: {
+        title: "Program Overview",
+        desc: "現在、コーチングを基盤とした学習計画・実行管理プログラムを提供しています。",
+        sections: [
+          { label: "対象", items: ["大学受験対策", "英検（準2級〜準1級）", "TOEICスコア向上", "留学準備", "社会人向け実践英語"] },
+          { label: "形式", items: ["オンライン（Zoom / Google Meet）", "全国対応", "週2回（1回60分）"] },
+          { label: "料金目安", items: ["月額 39,800円〜"], note: "※目標・頻度により調整されます。 ※質問対応はセッション内および定期フィードバックにて行います。" }
+        ]
+      },
+      consultation: {
+        title: "Consultation",
+        desc: "現在、品質維持のためプログラムは限定的にご案内しています。英語学習を「やみくもな努力」から「計画と方法のある成長」へ変えたい方は、ご相談フォームよりお問い合わせください。"
+      }
     }
   },
   {
@@ -702,35 +724,124 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
               <p className="text-2xl md:text-3xl font-black leading-relaxed text-black">
                 {d.description}
               </p>
+
+              {d.results && (
+                <div className="space-y-12 pt-12 border-t border-black/10">
+                  <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/60">
+                    {d.results.title}
+                  </h3>
+                  <div className="space-y-10">
+                    {d.results.items.map((item: any, i: number) => (
+                      <div key={i} className="space-y-4">
+                        <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block">{item.category}</span>
+                        <div className="space-y-2">
+                          {item.content.map((c: string, j: number) => (
+                            <p key={j} className="text-xl font-black text-black uppercase">{c}</p>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-lg font-black text-black/60 italic">
+                    {d.results.closing}
+                  </p>
+                </div>
+              )}
             </motion.div>
 
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="space-y-12 bg-black/[0.02] p-12 rounded-[4rem] border border-black/[0.05]"
+              className="space-y-12"
             >
-              <div className="space-y-8">
-                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/60 border-b border-black/10 pb-4">
-                  {d.experienceTitle}
-                </h3>
-                <p className="text-lg font-black text-black/80">
-                  {d.experienceDesc}
+              <div className="bg-black/[0.02] p-12 rounded-[4rem] border border-black/[0.05] space-y-12">
+                <div className="space-y-8">
+                  <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/60 border-b border-black/10 pb-4">
+                    {d.experienceTitle}
+                  </h3>
+                  <p className="text-lg font-black text-black/80">
+                    {d.experienceDesc}
+                  </p>
+                  <ul className="space-y-6">
+                    {d.experiences.map((exp: string, i: number) => (
+                      <li key={i} className="flex items-start gap-4 text-xl font-black text-black uppercase tracking-tight">
+                        <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
+                        {exp}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <p className="text-lg font-black text-black/60 leading-relaxed italic border-t border-black/5 pt-8">
+                  {d.closing}
                 </p>
-                <ul className="space-y-6">
-                  {d.experiences.map((exp: string, i: number) => (
-                    <li key={i} className="flex items-start gap-4 text-xl font-black text-black uppercase tracking-tight">
-                      <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
-                      {exp}
-                    </li>
-                  ))}
-                </ul>
               </div>
-              <p className="text-lg font-black text-black/60 leading-relaxed italic border-t border-black/5 pt-8">
-                {d.closing}
-              </p>
             </motion.div>
           </div>
+
+          {d.program && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-black p-12 md:p-24 rounded-[4rem] text-white space-y-16"
+            >
+              <div className="space-y-6">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-white/40">
+                  {d.program.title}
+                </h3>
+                <p className="text-3xl md:text-5xl font-black text-white leading-tight">
+                  {d.program.desc}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+                {d.program.sections.map((section: any, i: number) => (
+                  <div key={i} className="space-y-6">
+                    <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] block border-b border-white/10 pb-4">{section.label}</span>
+                    <div className="space-y-3">
+                      {section.items.map((item: string, j: number) => (
+                        <p key={j} className="text-2xl font-black uppercase tracking-tight">{item}</p>
+                      ))}
+                    </div>
+                    {section.note && (
+                      <p className="text-sm font-black text-white/40 leading-relaxed">
+                        {section.note}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {d.consultation && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="p-12 md:p-24 border-2 border-black rounded-[4rem] flex flex-col lg:flex-row items-center justify-between gap-16"
+            >
+              <div className="space-y-8 max-w-3xl">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black">
+                  {d.consultation.title}
+                </h3>
+                <p className="text-2xl md:text-3xl font-black text-black/80 leading-relaxed">
+                  {d.consultation.desc}
+                </p>
+              </div>
+              <button 
+                onClick={() => {
+                  onClose();
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="w-full lg:w-auto px-16 py-8 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-6 text-xl"
+              >
+                Contact Form
+                <ArrowUpRight size={28} />
+              </button>
+            </motion.div>
+          )}
         </div>
       </div>
     </motion.div>
