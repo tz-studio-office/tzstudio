@@ -546,7 +546,8 @@ const labExperiments = [
       "人の編集をどこまで減らせるか",
       "SEOへの影響",
       "投稿頻度と品質のバランス"
-    ]
+    ],
+    result: "現在、投稿作業時間を約70%削減する構造を実装中。"
   },
   {
     number: "02",
@@ -564,7 +565,8 @@ const labExperiments = [
       "手作業時間の削減率",
       "ミス削減",
       "導入難易度の最小化"
-    ]
+    ],
+    result: "一部業務において作業時間を半分以下に削減。"
   },
   {
     number: "03",
@@ -582,7 +584,8 @@ const labExperiments = [
       "短期スコア上昇率",
       "課題量と成果の相関",
       "学習負荷の最適化"
-    ]
+    ],
+    result: "短期集中設計によりスコア改善速度が向上。"
   },
   {
     number: "04",
@@ -600,7 +603,8 @@ const labExperiments = [
       "投稿時間と拡散率",
       "フォーマット変更の影響",
       "成長曲線の再現性"
-    ]
+    ],
+    result: "維持率改善により登録率が上昇傾向。"
   }
 ];
 
@@ -667,6 +671,16 @@ function Lab() {
                     ))}
                   </ul>
                 </div>
+              </div>
+
+              <div className="pt-8 border-t border-black/5">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-1 h-4 bg-black rounded-full" />
+                  <span className="text-[10px] font-black text-black uppercase tracking-[0.4em]">Result / Insight</span>
+                </div>
+                <p className="text-sm font-black text-black leading-relaxed">
+                  {exp.result}
+                </p>
               </div>
             </motion.div>
           ))}
