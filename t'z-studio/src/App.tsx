@@ -343,9 +343,52 @@ const services = [
           { label: "料金目安", items: ["月額 39,800円〜"], note: "※目標・頻度により調整されます。 ※質問対応はセッション内および定期フィードバックにて行います。" }
         ]
       },
+      structure: {
+        title: "Program Structure",
+        desc: "本プログラムは、以下の構造で進行します。",
+        items: [
+          {
+            number: "01",
+            title: "現状分析",
+            content: "現在の英語力・課題・目標を整理し、成長に必要な要素を明確化します。"
+          },
+          {
+            number: "02",
+            title: "逆算計画設計",
+            content: "試験日や目標スコアから逆算し、短期・中期・長期の学習計画を構築します。日々の学習内容も具体化し、継続可能なスケジュールへ落とし込みます。"
+          },
+          {
+            number: "03",
+            title: "実行セッション（週2回）",
+            content: "課題確認・理解定着・弱点補強を行います。単なる解説ではなく、「やり方」の精度を毎回確認します。"
+          },
+          {
+            number: "04",
+            title: "定期フィードバック",
+            content: "進捗状況を確認し、必要に応じて計画を修正します。常に最短距離で成果に向かう構造を維持します。"
+          }
+        ],
+        closing: "本プログラムは、単なる授業ではなく、成果到達までの伴走を前提としています。"
+      },
       consultation: {
         title: "Consultation",
-        desc: "現在、品質維持のためプログラムは限定的にご案内しています。英語学習を「やみくもな努力」から「計画と方法のある成長」へ変えたい方は、ご相談フォームよりお問い合わせください。"
+        subtitle: "英語学習を「自己流」から「成果設計型」へ。",
+        desc: "まずは30分の無料相談で、現在地の整理と目標達成までのロードマップをご提案します。",
+        contentTitle: "無料相談（30分）の内容",
+        contentDesc: "無料相談では、以下を行います。",
+        items: [
+          { title: "現状分析", content: "現在の英語力・学習状況・目標を整理します。" },
+          { title: "課題の可視化", content: "伸び悩みの原因や、改善すべきポイントを明確にします。" },
+          { title: "簡易ロードマップ提示", content: "目標達成までのおおよその期間と、学習設計の方向性をご提案します。" },
+          { title: "プログラム適合判断", content: "T'Z Studioのプログラムが適しているかをお伝えします。" }
+        ],
+        notes: [
+          "※オンライン（Zoom / Google Meet）",
+          "※所要時間：約30分",
+          "※全国対応"
+        ],
+        closing: "無理な勧誘は行いません。ご相談のみでも問題ありません。目標や状況によっては、他の選択肢をご提案する場合もございます。",
+        buttonLabel: "無料相談を申し込む"
       }
     }
   },
@@ -814,32 +857,102 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
             </motion.div>
           )}
 
+          {d.structure && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              className="space-y-16 py-12"
+            >
+              <div className="space-y-6">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/40">
+                  {d.structure.title}
+                </h3>
+                <p className="text-2xl md:text-3xl font-black text-black leading-tight">
+                  {d.structure.desc}
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {d.structure.items.map((item: any, i: number) => (
+                  <div key={i} className="flex gap-8 p-10 bg-black/[0.02] rounded-[3rem] border border-black/[0.05]">
+                    <span className="text-4xl font-black text-black/10 leading-none">{item.number}</span>
+                    <div className="space-y-4">
+                      <h4 className="text-xl font-black uppercase tracking-tight text-black">{item.title}</h4>
+                      <p className="text-lg font-black text-black/60 leading-relaxed">{item.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <p className="text-xl font-black text-black/40 italic text-center pt-8">
+                {d.structure.closing}
+              </p>
+            </motion.div>
+          )}
+
           {d.consultation && (
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="p-10 md:p-16 border-2 border-black rounded-[3rem] flex flex-col lg:flex-row items-center justify-between gap-12"
+              className="p-10 md:p-20 border-2 border-black rounded-[3rem] space-y-16"
             >
-              <div className="space-y-8 max-w-3xl">
-                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black">
-                  {d.consultation.title}
-                </h3>
-                <p className="text-xl md:text-2xl font-black text-black/80 leading-relaxed">
-                  {d.consultation.desc}
-                </p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div className="space-y-8">
+                  <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black">
+                    {d.consultation.title}
+                  </h3>
+                  <div className="space-y-4">
+                    <p className="text-2xl md:text-4xl font-black text-black leading-tight">
+                      {d.consultation.subtitle}
+                    </p>
+                    <p className="text-xl md:text-2xl font-black text-black/60 leading-relaxed">
+                      {d.consultation.desc}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="bg-black/[0.02] p-10 rounded-[2.5rem] border border-black/[0.05] space-y-10">
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-black uppercase tracking-[0.2em] text-black">{d.consultation.contentTitle}</h4>
+                    <p className="text-black/60 font-black">{d.consultation.contentDesc}</p>
+                  </div>
+                  <div className="space-y-6">
+                    {d.consultation.items.map((item: any, i: number) => (
+                      <div key={i} className="flex gap-4">
+                        <span className="text-black/20 font-black">{i + 1}.</span>
+                        <div className="space-y-1">
+                          <p className="font-black text-black uppercase tracking-tight">{item.title}</p>
+                          <p className="text-sm font-black text-black/60">{item.content}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pt-6 border-t border-black/5 flex flex-wrap gap-4">
+                    {d.consultation.notes.map((note: string, i: number) => (
+                      <span key={i} className="text-[10px] font-black text-black/40 uppercase tracking-widest">{note}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <button 
-                onClick={() => {
-                  onClose();
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full lg:w-auto px-12 py-6 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-4 text-lg"
-              >
-                Contact Form
-                <ArrowUpRight size={20} />
-              </button>
+
+              <div className="flex flex-col md:flex-row items-center justify-between gap-12 pt-12 border-t border-black/5">
+                <p className="text-lg font-black text-black/60 leading-relaxed max-w-2xl">
+                  {d.consultation.closing}
+                </p>
+                <button 
+                  onClick={() => {
+                    onClose();
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="w-full md:w-auto px-12 py-6 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-4 text-lg"
+                >
+                  {d.consultation.buttonLabel}
+                  <ArrowUpRight size={20} />
+                </button>
+              </div>
             </motion.div>
           )}
         </div>
