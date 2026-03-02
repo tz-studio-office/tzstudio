@@ -395,7 +395,75 @@ const services = [
   {
     id: "production",
     title: "Production",
-    desc: "写真撮影・画像編集・Virtual Staging。AI活用によるコンテンツ制作。ブランド世界観を実装レベルで構築。"
+    desc: "AIを活用した事業構造の実装。Website設計、業務自動化、AIコンテンツ制作まで構造設計から実装までを一貫して行います。",
+    detail: {
+      title: "AI-DRIVEN PRODUCTION",
+      subtitle: "設計から実装まで、伴走します。",
+      description: "構想を、実行へ。T'Z Studioは、単なるアドバイザーでも制作代行でもありません。AIを活用した事業構造を、設計から実装まで伴走します。ツールを導入することが目的ではありません。事業が継続的に回る「構造」をつくることが目的です。",
+      experienceTitle: "Implementation Experience",
+      experienceDesc: "これまで複数の事業において、AIを活用した構造設計および実装に関与してきました。",
+      experiences: [
+        "Stripe決済付き受発注サイト構築",
+        "AI活用Webサイト設計",
+        "Google Apps Scriptによる業務自動化",
+        "AI文章生成を活用した記事生成システム設計",
+        "事業導線の再構築"
+      ],
+      closing: "※守秘義務の関係上、特定企業名の公開は行っておりません。",
+      results: {
+        title: "What We Do",
+        items: [
+          { category: "Structure Design", content: ["サービス導線設計", "価格構造設計", "業務フロー再設計"] },
+          { category: "AI Integration", content: ["AI活用戦略設計", "コンテンツ自動生成設計", "業務効率化構造設計"] },
+          { category: "Automation", content: ["業務プロセス自動化設計", "問い合わせ〜納品までの流れ最適化", "Google Apps Script等による改善提案"] }
+        ],
+        closing: "単なるツール紹介ではなく、実装可能な形に落とし込みます。"
+      },
+      engagementModel: {
+        title: "Engagement Model",
+        desc: "ご支援は以下の流れで行います。",
+        items: [
+          {
+            number: "01",
+            title: "初回診断セッション",
+            price: "60分 / 5,000円（税込）",
+            content: "現状整理、課題分析、導入の方向性をご提案します。"
+          },
+          {
+            number: "02",
+            title: "構造設計フェーズ",
+            price: "55,000円〜",
+            content: "事業構造・業務設計・AI導入設計を具体的な実行計画に落とし込みます。"
+          },
+          {
+            number: "03",
+            title: "伴走サポート（月額）",
+            price: "29,800円〜",
+            content: "・月2回オンラインセッション ・改善提案 ・実装ディレクション ・簡易チャットサポート。単発ではなく、継続的な改善を前提とします。"
+          }
+        ]
+      },
+      optionalBuild: {
+        title: "Optional Build Support",
+        content: "サイト構築やプラットフォーム実装を弊社にご依頼いただく場合は、別途お見積りとなります。制作のみの受注は行っておらず、構造設計を前提としたプロジェクトとして承ります。"
+      },
+      targetAudience: {
+        title: "Who This Is For",
+        items: [
+          "AIを導入したいが何から始めれば良いかわからない",
+          "ツールは知っているが構造化できない",
+          "外注するとブラックボックスになるのが不安",
+          "事業を自分で理解しながら成長させたい",
+          "業務効率化と収益構造を同時に改善したい"
+        ]
+      },
+      consultation: {
+        title: "Consultation",
+        subtitle: "AI導入・構造診断セッション 60分 / 5,000円（税込）",
+        desc: "まずは現状整理から始めます。",
+        buttonLabel: "初回診断セッションを申し込む"
+      }
+    }
   },
   {
     id: "branding",
@@ -774,11 +842,11 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                     {d.results.title}
                   </h3>
                   <div className="space-y-10">
-                    {d.results.items.map((item: any, i: number) => (
+                    {d.results.items && d.results.items.map((item: any, i: number) => (
                       <div key={i} className="space-y-4">
                         <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block">{item.category}</span>
                         <div className="space-y-2">
-                          {item.content.map((c: string, j: number) => (
+                          {item.content && item.content.map((c: string, j: number) => (
                             <p key={j} className="text-xl font-black text-black uppercase">{c}</p>
                           ))}
                         </div>
@@ -807,7 +875,7 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                     {d.experienceDesc}
                   </p>
                   <ul className="space-y-6">
-                    {d.experiences.map((exp: string, i: number) => (
+                    {d.experiences && d.experiences.map((exp: string, i: number) => (
                       <li key={i} className="flex items-start gap-4 text-xl font-black text-black uppercase tracking-tight">
                         <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0" />
                         {exp}
@@ -838,11 +906,11 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                {d.program.sections.map((section: any, i: number) => (
+                {d.program.sections && d.program.sections.map((section: any, i: number) => (
                   <div key={i} className="space-y-6">
-                    <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] block border-b border-white/10 pb-4">{section.label}</span>
+                    <span className="text-sm md:text-base font-black text-white/60 uppercase tracking-widest block border-b border-white/10 pb-4">{section.label}</span>
                     <div className="space-y-3">
-                      {section.items.map((item: string, j: number) => (
+                      {section.items && section.items.map((item: string, j: number) => (
                         <p key={j} className="text-xl font-black uppercase tracking-tight">{item}</p>
                       ))}
                     </div>
@@ -874,7 +942,7 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                {d.structure.items.map((item: any, i: number) => (
+                {d.structure.items && d.structure.items.map((item: any, i: number) => (
                   <div key={i} className="flex gap-8 p-10 bg-black/[0.02] rounded-[3rem] border border-black/[0.05]">
                     <span className="text-4xl font-black text-black/10 leading-none">{item.number}</span>
                     <div className="space-y-4">
@@ -888,6 +956,133 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
               <p className="text-xl font-black text-black/40 italic text-center pt-8">
                 {d.structure.closing}
               </p>
+            </motion.div>
+          )}
+
+          {d.engagementModel && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              className="space-y-16 py-12"
+            >
+              <div className="space-y-6">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/40">
+                  {d.engagementModel.title}
+                </h3>
+                <p className="text-2xl md:text-3xl font-black text-black leading-tight">
+                  {d.engagementModel.desc}
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {d.engagementModel.items && d.engagementModel.items.map((item: any, i: number) => (
+                  <div key={i} className="p-10 bg-black/[0.02] rounded-[3rem] border border-black/[0.05] space-y-8 flex flex-col">
+                    <div className="flex justify-between items-start">
+                      <span className="text-4xl font-black text-black/10 leading-none">{item.number}</span>
+                      <span className="text-sm md:text-base font-black px-4 py-2 bg-black text-white rounded-full uppercase tracking-wider">{item.price}</span>
+                    </div>
+                    <div className="space-y-4 flex-grow">
+                      <h4 className="text-xl font-black uppercase tracking-tight text-black">{item.title}</h4>
+                      <p className="text-base font-black text-black/60 leading-relaxed whitespace-pre-wrap">{item.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <p className="text-xl font-black text-black/40 italic text-center pt-8">
+                単発ではなく、継続的な改善を前提とします。
+              </p>
+            </motion.div>
+          )}
+
+          {d.optionalBuild && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.56 }}
+              className="p-10 md:p-16 bg-black text-white rounded-[3rem] space-y-8"
+            >
+              <h3 className="text-xl font-black uppercase tracking-[0.4em] text-white/40">
+                {d.optionalBuild.title}
+              </h3>
+              <p className="text-xl md:text-2xl font-black leading-relaxed">
+                {d.optionalBuild.content}
+              </p>
+            </motion.div>
+          )}
+
+          {d.roles && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-12 py-12"
+            >
+              <div className="space-y-8">
+                <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/40">
+                  {d.roles.title}
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {d.roles.items && d.roles.items.map((role: string, i: number) => (
+                    <div key={i} className="p-6 border border-black rounded-2xl flex items-center justify-center text-center">
+                      <span className="text-lg font-black uppercase tracking-tight">{role}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-center">
+                <p className="text-2xl md:text-3xl font-black text-black leading-relaxed italic">
+                  {d.roles.desc}
+                </p>
+              </div>
+            </motion.div>
+          )}
+
+          {d.whyUs && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.56 }}
+              className="bg-black p-10 md:p-16 rounded-[3rem] text-white space-y-12"
+            >
+              <h3 className="text-xl font-black uppercase tracking-[0.4em] text-white/40">
+                {d.whyUs.title}
+              </h3>
+              <div className="space-y-8">
+                {d.whyUs.items && d.whyUs.items.map((item: any, i: number) => (
+                  <div key={i} className={`flex items-start gap-6 ${item.type === 'solution' ? 'text-white' : 'text-white/40'}`}>
+                    {item.type === 'solution' ? (
+                      <div className="w-3 h-3 bg-white rounded-full mt-3 flex-shrink-0" />
+                    ) : (
+                      <div className="w-3 h-[2px] bg-white/20 mt-4 flex-shrink-0" />
+                    )}
+                    <p className="text-xl md:text-2xl font-black uppercase tracking-tight leading-tight">
+                      {item.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {d.targetAudience && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.57 }}
+              className="py-12 space-y-12"
+            >
+              <h3 className="text-xl font-black uppercase tracking-[0.4em] text-black/40">
+                {d.targetAudience.title}
+              </h3>
+              <div className="flex flex-wrap gap-4">
+                {d.targetAudience.items && d.targetAudience.items.map((item: string, i: number) => (
+                  <div key={i} className="px-8 py-4 bg-black text-white rounded-full text-lg font-black uppercase tracking-tight">
+                    {item}
+                  </div>
+                ))}
+              </div>
             </motion.div>
           )}
 
@@ -905,7 +1100,9 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                   </h3>
                   <div className="space-y-4">
                     <p className="text-2xl md:text-4xl font-black text-black leading-tight">
-                      {d.consultation.subtitle}
+                      {d.consultation.subtitle.split(' ').map((part: string, i: number) => (
+                        <span key={i} className="inline-block whitespace-nowrap mr-[0.2em] last:mr-0">{part}</span>
+                      ))}
                     </p>
                     <p className="text-xl md:text-2xl font-black text-black/60 leading-relaxed">
                       {d.consultation.desc}
@@ -913,28 +1110,36 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                   </div>
                 </div>
                 
-                <div className="bg-black/[0.02] p-10 rounded-[2.5rem] border border-black/[0.05] space-y-10">
-                  <div className="space-y-4">
-                    <h4 className="text-lg font-black uppercase tracking-[0.2em] text-black">{d.consultation.contentTitle}</h4>
-                    <p className="text-black/60 font-black">{d.consultation.contentDesc}</p>
-                  </div>
-                  <div className="space-y-6">
-                    {d.consultation.items.map((item: any, i: number) => (
-                      <div key={i} className="flex gap-4">
-                        <span className="text-black/20 font-black">{i + 1}.</span>
-                        <div className="space-y-1">
-                          <p className="font-black text-black uppercase tracking-tight">{item.title}</p>
-                          <p className="text-sm font-black text-black/60">{item.content}</p>
-                        </div>
+                {(d.consultation.contentTitle || d.consultation.items || d.consultation.notes) && (
+                  <div className="bg-black/[0.02] p-10 rounded-[2.5rem] border border-black/[0.05] space-y-10">
+                    {d.consultation.contentTitle && (
+                      <div className="space-y-4">
+                        <h4 className="text-lg font-black uppercase tracking-[0.2em] text-black">{d.consultation.contentTitle}</h4>
+                        <p className="text-black/60 font-black">{d.consultation.contentDesc}</p>
                       </div>
-                    ))}
+                    )}
+                    {d.consultation.items && (
+                      <div className="space-y-6">
+                        {d.consultation.items.map((item: any, i: number) => (
+                          <div key={i} className="flex gap-4">
+                            <span className="text-black/20 font-black">{i + 1}.</span>
+                            <div className="space-y-1">
+                              <p className="font-black text-black uppercase tracking-tight">{item.title}</p>
+                              <p className="text-sm font-black text-black/60">{item.content}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {d.consultation.notes && (
+                      <div className="pt-6 border-t border-black/5 flex flex-wrap gap-4">
+                        {d.consultation.notes.map((note: string, i: number) => (
+                          <span key={i} className="text-[10px] font-black text-black/40 uppercase tracking-widest">{note}</span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  <div className="pt-6 border-t border-black/5 flex flex-wrap gap-4">
-                    {d.consultation.notes.map((note: string, i: number) => (
-                      <span key={i} className="text-[10px] font-black text-black/40 uppercase tracking-widest">{note}</span>
-                    ))}
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="flex flex-col md:flex-row items-center justify-between gap-12 pt-12 border-t border-black/5">
