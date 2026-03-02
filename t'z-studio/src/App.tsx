@@ -856,6 +856,15 @@ function Contact() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const message = (document.getElementById('message') as HTMLTextAreaElement).value;
+    
+    const subject = encodeURIComponent(`【T'Z Studio】お問い合わせ: ${name}様`);
+    const body = encodeURIComponent(`お名前: ${name}\nメールアドレス: ${email}\n\nメッセージ:\n${message}`);
+    
+    window.location.href = `mailto:info@t-z-studio.com?subject=${subject}&body=${body}`;
+    
     setStatus('submitting');
     setTimeout(() => setStatus('success'), 1500);
   };
@@ -1326,9 +1335,8 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                 </p>
                 <button 
                   onClick={() => {
-                    onClose();
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                    const subject = encodeURIComponent(`【T'Z Studio】お問い合わせ: ${d.title}`);
+                    window.location.href = `mailto:info@t-z-studio.com?subject=${subject}`;
                   }}
                   className="w-full md:w-auto px-12 py-6 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-4 text-lg"
                 >
