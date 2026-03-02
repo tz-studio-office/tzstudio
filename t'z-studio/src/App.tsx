@@ -94,7 +94,7 @@ function Header() {
   const navItems = [
     { name: 'Vision', id: 'vision' },
     { name: 'Services', id: 'services' },
-    { name: 'Projects', id: 'projects' },
+    { name: 'Lab', id: 'lab' },
     { name: 'About', id: 'about' }
   ];
 
@@ -155,7 +155,7 @@ function Header() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 bg-white z-[999] p-12 flex flex-col justify-center items-center gap-10"
           >
-            {['Vision', 'Services', 'Projects', 'About', 'Contact'].map((item) => (
+            {['Vision', 'Services', 'Lab', 'About', 'Contact'].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`} 
@@ -221,7 +221,7 @@ function Hero() {
             <p className="text-2xl md:text-4xl font-black text-black/80 max-w-5xl leading-[1.2] tracking-tight uppercase">
               For Human Potential. <br />
               <span className="text-black/40 text-xl md:text-2xl mt-8 block normal-case font-medium">
-                教育、AI設計、IPブランディングを通じて<br />
+                教育、AI設計、業務自動化を通じて<br />
                 持続可能な成長構造を設計します。
               </span>
             </p>
@@ -464,11 +464,6 @@ const services = [
         buttonLabel: "初回診断セッションを申し込む"
       }
     }
-  },
-  {
-    id: "branding",
-    title: "IP Branding",
-    desc: "IP企画・設計、世界観構築、YouTube / デジタル展開設計、長期運営戦略。"
   }
 ];
 
@@ -493,7 +488,7 @@ function Services({ onServiceClick }: { onServiceClick: (service: any) => void }
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {services.map((s, i) => (
             <motion.div 
               key={i}
@@ -534,86 +529,147 @@ function Services({ onServiceClick }: { onServiceClick: (service: any) => void }
   );
 }
 
-const projects = [
+const labExperiments = [
   {
-    name: "Experimental IP",
-    type: "Digital IP Brand",
-    image: "https://picsum.photos/seed/kittens/1200/800"
+    number: "01",
+    title: "AI Content Publishing System",
+    description: "コンテンツ制作を「毎回作る」から「仕組みで回す」へ移行する実験を行っています。",
+    doing: [
+      "外部ニュース／情報の自動取得",
+      "AIによる要約・整形",
+      "記事フォーマットへの変換",
+      "Webサイトへの自動投稿",
+      "投稿データの分析"
+    ],
+    themes: [
+      "生成精度の安定化",
+      "人の編集をどこまで減らせるか",
+      "SEOへの影響",
+      "投稿頻度と品質のバランス"
+    ]
   },
   {
-    name: "AI Publishing System",
-    type: "Research & Dev",
-    image: "https://picsum.photos/seed/ailab/1200/800"
+    number: "02",
+    title: "Business Automation System",
+    description: "小規模事業者や非エンジニアでも導入できる実装レベルの自動化構造を検証しています。",
+    doing: [
+      "見積書の自動生成",
+      "定型メール返信の自動化",
+      "顧客データ整理",
+      "業務フローの自動処理設計",
+      "決済フローの構造化"
+    ],
+    themes: [
+      "属人化の排除",
+      "手作業時間の削減率",
+      "ミス削減",
+      "導入難易度の最小化"
+    ]
   },
   {
-    name: "Education Framework",
-    type: "Concept Design",
-    image: "https://picsum.photos/seed/future/1200/800"
+    number: "03",
+    title: "Education Performance Model",
+    description: "英語学習を「努力量」ではなく「構造と実行管理」で成果を出すモデルを改善しています。",
+    doing: [
+      "学習開始時の現状分析",
+      "試験日から逆算したスケジュール設計",
+      "課題設計と実行管理",
+      "セッションごとの改善フィードバック",
+      "成果データの記録と分析"
+    ],
+    themes: [
+      "継続率向上",
+      "短期スコア上昇率",
+      "課題量と成果の相関",
+      "学習負荷の最適化"
+    ]
+  },
+  {
+    number: "04",
+    title: "IP Growth & Multi-Channel Analysis",
+    description: "コンテンツ運用を「感覚」ではなく「データと改善ループ」で管理する実験を行っています。",
+    doing: [
+      "YouTube / SNS複数アカウント運用",
+      "投稿ごとの再生・維持率データ収集",
+      "タイトル／構成のAB検証",
+      "フォーマット改善",
+      "成長要因の数値分析"
+    ],
+    themes: [
+      "維持率と登録率の相関",
+      "投稿時間と拡散率",
+      "フォーマット変更の影響",
+      "成長曲線の再現性"
+    ]
   }
 ];
 
-function Projects() {
-  const constraintsRef = useRef<HTMLDivElement>(null);
-
+function Lab() {
   return (
-    <section id="projects" className="py-24 md:py-32 bg-white overflow-hidden scroll-mt-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <span className="text-[12px] font-black text-black uppercase tracking-[0.6em] border-l-4 border-black pl-6 mb-6 block">03. THE ARCHIVE</span>
-          <h2 className="font-sans text-7xl md:text-[8vw] font-black tracking-[-0.1em] text-black uppercase leading-none">Projects.</h2>
-        </motion.div>
-      </div>
-      
-      <div className="relative" ref={constraintsRef}>
-        <motion.div 
-          drag="x"
-          dragConstraints={constraintsRef}
-          className="flex gap-8 px-6 md:px-12 cursor-grab active:cursor-grabbing w-fit"
-        >
-          {projects.map((p, i) => (
-            <motion.div 
+    <section id="lab" className="py-24 md:py-32 bg-white scroll-mt-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-12">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-[12px] font-black text-black mb-6 block uppercase tracking-[0.6em] border-l-4 border-black pl-6">03. THE ARCHIVE</span>
+            <h2 className="font-sans text-7xl md:text-[8vw] font-black tracking-[-0.1em] text-black uppercase leading-none">Lab.</h2>
+            <p className="mt-8 text-black/60 font-black text-sm uppercase tracking-widest">Ongoing Experiments & Implementation</p>
+          </motion.div>
+          <div className="max-w-xl">
+            <p className="text-black font-black text-xl md:text-2xl leading-[1.3] tracking-tight uppercase">
+              T'Z Studioは、思想だけでなく、実際に構造を組み、動かし、改善しています。ここでは現在進行中の実装内容を公開しています。
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {labExperiments.map((exp, i) => (
+            <motion.div
               key={i}
-              className="flex-shrink-0 w-[85vw] md:w-[40vw] group flex flex-col gap-6"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="p-10 md:p-12 border-2 border-black/[0.08] rounded-[3rem] space-y-12 hover:border-black transition-all duration-700"
             >
-              <div className="relative overflow-hidden rounded-[2.5rem] aspect-[16/10] bg-white border-2 border-black/[0.08] shadow-[0_30px_80px_rgba(0,0,0,0.03)] transition-all duration-700 group-hover:border-black">
-                <motion.img 
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-                  src={p.image} 
-                  alt={p.name}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
-                  <div className="bg-white text-black font-black text-[11px] uppercase tracking-[0.4em] px-8 py-4 rounded-full shadow-2xl">
-                    View Project
-                  </div>
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <span className="text-4xl font-black text-black/10">{exp.number}</span>
+                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight">{exp.title}</h3>
                 </div>
+                <p className="text-lg font-black text-black/80 leading-relaxed">{exp.description}</p>
               </div>
-              
-              <div className="space-y-3 px-4">
-                <span className="text-[10px] font-black text-black/60 uppercase tracking-[0.5em]">{p.type}</span>
-                <div className="flex justify-between items-center">
-                  <h3 className="font-sans text-2xl md:text-3xl font-black tracking-[-0.08em] text-black uppercase">
-                    {p.name}
-                  </h3>
-                  <div className="w-12 h-12 rounded-full border-2 border-black/10 flex items-center justify-center group-hover:bg-black transition-all duration-500">
-                    <ArrowUpRight size={18} className="text-black group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
-                  </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+                <div className="space-y-6">
+                  <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block border-b border-black/10 pb-4">実際にやっていること</span>
+                  <ul className="space-y-3">
+                    {exp.doing.map((item, j) => (
+                      <li key={j} className="text-sm font-black text-black/70 flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="space-y-6">
+                  <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block border-b border-black/10 pb-4">現在の検証テーマ</span>
+                  <ul className="space-y-3">
+                    {exp.themes.map((item, j) => (
+                      <li key={j} className="text-sm font-black text-black/70 flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-        
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mt-10 flex items-center gap-4 text-black/40">
-          <div className="w-10 h-0.5 bg-black/10" />
-          <span className="text-[10px] font-black uppercase tracking-[0.4em]">Drag to explore</span>
         </div>
       </div>
     </section>
@@ -1201,7 +1257,7 @@ export default function App() {
         <Vision />
         <Marquee />
         <Services onServiceClick={setSelectedService} />
-        <Projects />
+        <Lab />
         <About />
         <Contact />
         <Footer />
