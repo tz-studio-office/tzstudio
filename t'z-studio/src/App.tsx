@@ -533,6 +533,8 @@ const labExperiments = [
   {
     number: "01",
     title: "AI Content Publishing System",
+    shortTitle: "AI Content System",
+    summary: "情報取得から投稿まで自動化",
     description: "コンテンツ制作を「毎回作る」から「仕組みで回す」へ移行する実験を行っています。",
     doing: [
       "外部ニュース／情報の自動取得",
@@ -552,6 +554,8 @@ const labExperiments = [
   {
     number: "02",
     title: "Business Automation System",
+    shortTitle: "Business Automation",
+    summary: "業務プロセスの構造化",
     description: "小規模事業者や非エンジニアでも導入できる実装レベルの自動化構造を検証しています。",
     doing: [
       "見積書の自動生成",
@@ -571,6 +575,8 @@ const labExperiments = [
   {
     number: "03",
     title: "Education Performance Model",
+    shortTitle: "Education Model",
+    summary: "逆算型成果設計",
     description: "英語学習を「努力量」ではなく「構造と実行管理」で成果を出すモデルを改善しています。",
     doing: [
       "学習開始時の現状分析",
@@ -590,6 +596,8 @@ const labExperiments = [
   {
     number: "04",
     title: "IP Growth & Multi-Channel Analysis",
+    shortTitle: "IP Growth",
+    summary: "データ管理型コンテンツ運用",
     description: "コンテンツ運用を「感覚」ではなく「データと改善ループ」で管理する実験を行っています。",
     doing: [
       "YouTube / SNS複数アカウント運用",
@@ -608,7 +616,129 @@ const labExperiments = [
   }
 ];
 
+function LabModal({ isOpen, onClose, initialIndex }: { isOpen: boolean, onClose: () => void, initialIndex: number }) {
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const exp = labExperiments[activeIndex];
+
+  useEffect(() => {
+    setActiveIndex(initialIndex);
+  }, [initialIndex]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[3000] flex items-center justify-center p-4 md:p-8"
+        >
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/90 backdrop-blur-xl" 
+          />
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="relative w-full max-w-5xl bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+          >
+            {/* Modal Header / Tabs */}
+            <div className="p-6 md:p-10 border-b border-black/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-white sticky top-0 z-10">
+              <div className="flex flex-wrap gap-2 md:gap-4">
+                {labExperiments.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
+                      activeIndex === idx 
+                        ? 'bg-black text-white shadow-xl shadow-black/20' 
+                        : 'bg-black/[0.03] text-black/40 hover:bg-black/[0.08]'
+                    }`}
+                  >
+                    {item.shortTitle}
+                  </button>
+                ))}
+              </div>
+              <button 
+                onClick={onClose}
+                className="w-12 h-12 rounded-full bg-black/[0.05] flex items-center justify-center hover:bg-black hover:text-white transition-all group"
+              >
+                <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="flex-1 overflow-y-auto p-8 md:p-16 custom-scrollbar">
+              <motion.div
+                key={activeIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-16"
+              >
+                <div className="space-y-8">
+                  <div className="flex items-center gap-6">
+                    <span className="text-6xl font-black text-black/10">{exp.number}</span>
+                    <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tight leading-none">{exp.title}</h3>
+                  </div>
+                  <p className="text-xl md:text-2xl font-black text-black/80 leading-relaxed max-w-3xl">{exp.description}</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                  <div className="space-y-8">
+                    <span className="text-[11px] font-black text-black/40 uppercase tracking-[0.5em] block border-b border-black/10 pb-6">実際にやっていること</span>
+                    <ul className="space-y-4">
+                      {exp.doing.map((item, j) => (
+                        <li key={j} className="text-base font-black text-black/70 flex items-start gap-4">
+                          <span className="w-2 h-2 rounded-full bg-black/20 mt-2 shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="space-y-8">
+                    <span className="text-[11px] font-black text-black/40 uppercase tracking-[0.5em] block border-b border-black/10 pb-6">現在の検証テーマ</span>
+                    <ul className="space-y-4">
+                      {exp.themes.map((item, j) => (
+                        <li key={j} className="text-base font-black text-black/70 flex items-start gap-4">
+                          <span className="w-2 h-2 rounded-full bg-black/20 mt-2 shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pt-12 border-t border-black/5">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-1.5 h-6 bg-black rounded-full" />
+                    <span className="text-[11px] font-black text-black uppercase tracking-[0.5em]">Result / Insight</span>
+                  </div>
+                  <div className="bg-black/[0.02] p-8 md:p-12 rounded-[2rem] border border-black/[0.05]">
+                    <p className="text-xl font-black text-black leading-relaxed">
+                      {exp.result}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 function Lab() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
     <section id="lab" className="py-24 md:py-32 bg-white scroll-mt-32">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -630,62 +760,42 @@ function Lab() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {labExperiments.map((exp, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="p-10 md:p-12 border-2 border-black/[0.08] rounded-[3rem] space-y-12 hover:border-black transition-all duration-700"
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => {
+                setSelectedIndex(i);
+                setIsModalOpen(true);
+              }}
+              className="group p-8 border-2 border-black/[0.05] rounded-[2rem] space-y-6 hover:border-black transition-all duration-500 cursor-pointer bg-white hover:shadow-[0_30px_60px_rgba(0,0,0,0.05)]"
             >
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <span className="text-4xl font-black text-black/10">{exp.number}</span>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight">{exp.title}</h3>
-                </div>
-                <p className="text-lg font-black text-black/80 leading-relaxed">{exp.description}</p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                <div className="space-y-6">
-                  <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block border-b border-black/10 pb-4">実際にやっていること</span>
-                  <ul className="space-y-3">
-                    {exp.doing.map((item, j) => (
-                      <li key={j} className="text-sm font-black text-black/70 flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="space-y-6">
-                  <span className="text-[10px] font-black text-black/40 uppercase tracking-[0.4em] block border-b border-black/10 pb-4">現在の検証テーマ</span>
-                  <ul className="space-y-3">
-                    {exp.themes.map((item, j) => (
-                      <li key={j} className="text-sm font-black text-black/70 flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+              <div className="flex justify-between items-start">
+                <span className="text-2xl font-black text-black/10 group-hover:text-black/20 transition-colors">{exp.number}</span>
+                <div className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-all duration-500">
+                  <ArrowUpRight size={16} className="text-black group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
                 </div>
               </div>
-
-              <div className="pt-8 border-t border-black/5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-1 h-4 bg-black rounded-full" />
-                  <span className="text-[10px] font-black text-black uppercase tracking-[0.4em]">Result / Insight</span>
-                </div>
-                <p className="text-sm font-black text-black leading-relaxed">
-                  {exp.result}
+              <div className="space-y-2">
+                <h3 className="text-lg font-black uppercase tracking-tight leading-tight">{exp.shortTitle}</h3>
+                <p className="text-xs font-black text-black/40 uppercase tracking-widest leading-relaxed">
+                  → {exp.summary}
                 </p>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <LabModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        initialIndex={selectedIndex} 
+      />
     </section>
   );
 }
