@@ -372,8 +372,8 @@ const services = [
       },
       consultation: {
         title: "Consultation",
-        subtitle: "英語学習を「自己流」から「成果設計型」へ。",
-        desc: "まずは30分の無料相談で、現在地の整理と目標達成までのロードマップをご提案します。",
+        subtitle: "英語学習を「自己流」から\n「成果設計型」へ。",
+        desc: "まずは30\u00A0分の無料相談で、現在地の整理と目標達成までのロードマップをご提案します。",
         contentTitle: "無料相談（30分）の内容",
         contentDesc: "無料相談では、以下を行います。",
         items: [
@@ -459,7 +459,7 @@ const services = [
       },
       consultation: {
         title: "Consultation",
-        subtitle: "AI導入・構造診断セッション 60分 / 5,000円（税込）",
+        subtitle: "AI導入・構造診断セッション\n60\u00A0分 / 5,000円（税込）",
         desc: "まずは現状整理から始めます。",
         buttonLabel: "初回診断セッションを申し込む"
       }
@@ -1099,10 +1099,8 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                     {d.consultation.title}
                   </h3>
                   <div className="space-y-4">
-                    <p className="text-2xl md:text-4xl font-black text-black leading-tight">
-                      {d.consultation.subtitle.split(' ').map((part: string, i: number) => (
-                        <span key={i} className="inline-block whitespace-nowrap mr-[0.2em] last:mr-0">{part}</span>
-                      ))}
+                    <p className="text-2xl md:text-4xl font-black text-black leading-tight whitespace-pre-wrap">
+                      {d.consultation.subtitle}
                     </p>
                     <p className="text-xl md:text-2xl font-black text-black/60 leading-relaxed">
                       {d.consultation.desc}
