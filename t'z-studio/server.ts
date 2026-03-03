@@ -5,8 +5,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-
 async function startServer() {
   const app = express();
   const PORT = 3000;
@@ -17,41 +15,50 @@ async function startServer() {
   app.post("/api/contact", async (req, res) => {
     const { name, email, message, subject: customSubject } = req.body;
 
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn("RESEND_API_KEY not provided.");
+      return res.status(400).json({ 
+        status: "error", 
+        message: "RESEND_API_KEY is missing. Please set it in environment variables." 
+      });
+    }
+
+    const resend = new Resend(apiKey);
     const subject = customSubject || `【T'Z Studio】お問い合わせ: ${name}様`;
     const body = `お名前: ${name}\nメールアドレス: ${email}\n\nメッセージ:\n${message}`;
 
-    console.log("Sending email to info@t-z-studio.com via Resend...");
+    console.log("Attempting to send email via Resend...");
     
-    if (resend) {
-      try {
-        const { data, error } = await resend.emails.send({
-          from: "T'Z Studio <onboarding@resend.dev>", // Replace with your verified domain in production
-          to: ["info@t-z-studio.com"],
-          subject: subject,
-          text: body,
-          replyTo: email,
+    try {
+      const htmlBody = body.replace(/\n/g, "<br>");
+      const { data, error } = await resend.emails.send({
+        from: "T'Z Studio <contact@t-z-studio.com>",
+        to: "info@t-z-studio.com",
+        subject: subject,
+        text: body,
+        html: `<div>${htmlBody}</div>`,
+        replyTo: email,
+      });
+
+      if (error) {
+        console.error("Resend API Error Details:", JSON.stringify(error, null, 2));
+        return res.status(400).json({ 
+          status: "error", 
+          message: "Resend API Error", 
+          details: error.message,
+          code: error.name
         });
-
-        if (error) {
-          console.error("Resend error:", error);
-          return res.status(500).json({ status: "error", message: error.message });
-        }
-
-        console.log("Email sent successfully via Resend:", data);
-        return res.json({ status: "ok", message: "Email sent successfully." });
-      } catch (error) {
-        console.error("Error sending email via Resend:", error);
-        return res.status(500).json({ status: "error", message: "Failed to send email." });
       }
-    } else {
-      // If no API key, log to console and simulate success
-      console.warn("RESEND_API_KEY not provided. Email logged to console.");
-      console.log("Subject:", subject);
-      console.log("Body:", body);
-      return res.json({ 
-        status: "ok", 
-        message: "Email logged to console (Resend not configured).",
-        debug: { subject, body }
+
+      console.log("Resend Success Response:", JSON.stringify(data, null, 2));
+      return res.json({ status: "ok", message: "Email sent successfully.", data });
+    } catch (error: any) {
+      console.error("Unexpected Error sending email via Resend:", error);
+      return res.status(500).json({ 
+        status: "error", 
+        message: "Unexpected Server Error",
+        details: error?.message || "Unknown error"
       });
     }
   });
