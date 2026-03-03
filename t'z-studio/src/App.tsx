@@ -872,8 +872,16 @@ function Contact() {
       if (response.ok) {
         setStatus('success');
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || errorData.details || 'Failed to send message');
+        let errorMessage = 'Failed to send message';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.details || errorMessage;
+        } catch (e) {
+          // If not JSON, get text
+          const text = await response.text();
+          errorMessage = text || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
     } catch (error: any) {
       console.error('Error sending message:', error);
@@ -940,7 +948,7 @@ function Footer() {
           <a href="#" className="text-xs font-black uppercase tracking-widest text-black/40 hover:text-black transition-colors">LinkedIn</a>
         </div>
         <div className="text-xs font-black text-black/20 uppercase tracking-widest">
-          © 2026 T'Z Studio.
+          © 2024 T'Z Studio.
         </div>
       </div>
     </footer>
@@ -1365,8 +1373,15 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                         alert('お問い合わせを送信しました。');
                         onClose();
                       } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || errorData.details || 'Failed to send inquiry');
+                        let errorMessage = 'Failed to send inquiry';
+                        try {
+                          const errorData = await response.json();
+                          errorMessage = errorData.message || errorData.details || errorMessage;
+                        } catch (e) {
+                          const text = await response.text();
+                          errorMessage = text || errorMessage;
+                        }
+                        throw new Error(errorMessage);
                       }
                     } catch (error: any) {
                       console.error('Error sending inquiry:', error);
