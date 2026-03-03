@@ -854,19 +854,32 @@ function About() {
 function Contact() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const name = (document.getElementById('name') as HTMLInputElement).value;
     const email = (document.getElementById('email') as HTMLInputElement).value;
     const message = (document.getElementById('message') as HTMLTextAreaElement).value;
     
-    const subject = encodeURIComponent(`【T'Z Studio】お問い合わせ: ${name}様`);
-    const body = encodeURIComponent(`お名前: ${name}\nメールアドレス: ${email}\n\nメッセージ:\n${message}`);
-    
-    window.location.href = `mailto:info@t-z-studio.com?subject=${subject}&body=${body}`;
-    
     setStatus('submitting');
-    setTimeout(() => setStatus('success'), 1500);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || errorData.details || 'Failed to send message');
+      }
+    } catch (error: any) {
+      console.error('Error sending message:', error);
+      alert(`Failed to send message: ${error.message}`);
+      setStatus('idle');
+    }
   };
 
   return (
@@ -1334,9 +1347,31 @@ function ServiceDetail({ service, onClose }: { service: any, onClose: () => void
                   {d.consultation.closing}
                 </p>
                 <button 
-                  onClick={() => {
-                    const subject = encodeURIComponent(`【T'Z Studio】お問い合わせ: ${d.title}`);
-                    window.location.href = `mailto:info@t-z-studio.com?subject=${subject}`;
+                  onClick={async () => {
+                    const subject = `【T'Z Studio】お問い合わせ: ${d.title}`;
+                    try {
+                      const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                          name: 'Service Detail Inquiry', 
+                          email: 'info@t-z-studio.com', 
+                          message: `Inquiry for ${d.title}`,
+                          subject 
+                        })
+                      });
+                      
+                      if (response.ok) {
+                        alert('お問い合わせを送信しました。');
+                        onClose();
+                      } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || errorData.details || 'Failed to send inquiry');
+                      }
+                    } catch (error: any) {
+                      console.error('Error sending inquiry:', error);
+                      alert(`送信に失敗しました: ${error.message}`);
+                    }
                   }}
                   className="w-full md:w-auto px-12 py-6 bg-black text-white rounded-full font-black uppercase tracking-[0.2em] hover:scale-[1.05] transition-transform flex items-center justify-center gap-4 text-lg"
                 >
